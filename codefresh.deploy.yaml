@@ -8,9 +8,9 @@ steps:
   update:
     title: Helm Upgrade
     image: 'codefresh/plugin-helm:2.8.0'
-    entrypoint : "/bin/sh"
-    command:
-       - kubeclt config view --minify 
+    entry_point : "/bin/sh"
+    commands:
+       - kubeclt config view --minify
     environment:
       - CHART_NAME=${{CHART_NAME}}
       - RELEASE_NAME=${{RELEASE_NAME}}
