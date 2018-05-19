@@ -1,0 +1,40 @@
+version: '1.0'
+kind: pipeline
+metadata:
+  name: verchol/webinar-canary/webinar-canary2
+  labels:
+    tags: ["cd", "kuberentes"]
+  deprecate:
+    applicationPort: '8080'
+    repoPipeline: true
+  project: verchol/webinar-canary
+spec:
+  triggers:
+    - type: git
+      repo: verchol/webinar-canary
+      provider: github
+      events:
+        - push
+      branchRegex: /.*/gi
+  contexts: []
+  variables:
+    - key: PORT
+      value: '8080'
+    - key: CHART_NAME
+      value: canary
+    - key: RELEASE_NAME
+      value: canaryRelease
+    - key: KUBE_CONTEXT
+      value: cf-load@codefresh-load
+    - key: NAMESPACE
+      value : default
+    - key: DEBUG_CHART=
+      value: false
+    - key: CHART_REPO_URL
+      value: ./deploy/canary
+  specTemplate:
+    location: git
+    repo: verchol/webinar-canary
+    path: codefresh.deploy.yaml
+  steps: {}
+
